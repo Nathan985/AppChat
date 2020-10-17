@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whatsapp</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+</head>
+
+<body>
+    <div class="hero">
+        <div class="container">
+            <div class="messConst">
+                <div id="messInfo" class="messInfo">
+                </div>
+                <div id="Chat" class="messChat">
+                    <!-- <div class="Talk">
+                        <img src="IMG/default_user.png" class="constIMG" alt="">
+                        <div id="teste" class="messText">
+                            Monique é feia!
+                        </div>
+                    </div>
+                    <div class="TalkSend">
+                        <img src="IMG/default_user.png" class="constIMGSend" alt="">
+                        <div class="messTextSend">
+                            Monique é feia!
+                        </div>
+                    </div> -->
+                </div>
+                <div class="messInput">
+                    <form action="Controller/EnviarChat.php" id="chat" method="post">
+                        <!-- <input class="messElement" name="Mess" id="text_mess" type="text" placeholder="Digite Aqui!">
+                        <label for="Enviar"><i class="messEnviar fas fa-paper-plane"></i></label> <i
+                            class="messEnviar fas fa-paperclip"></i></i> -->
+                        <button name="Enviar" id="Enviar" style="display: none;" type="submit"></button>
+                    </form>
+                </div>
+            </div>
+            <div class="const">
+                <h1 class="titleConst"><i class="fas fa-address-book"></i> Contatos</h1>
+                <div class="constList" id="contato">
+                    <!-- <div class="constPeople">
+                    <img class="constIMG" src="IMG/default_user.png" alt="">
+                    <div>
+                        <p class="constName">Nathan Pereira</p>
+                        <p class="constSTT">echo "Hello Word";</p>
+                    </div>
+                </div>
+                <div class="constPeople">
+                    <img class="constIMG" src="IMG/default_user.png" alt="">
+                    <div>
+                        <p class="constName">Nathan Pereira</p>
+                        <p class="constSTT">echo "Hello Word";</p>
+                    </div>
+                </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect();
+    // const id_Amigo = 0;
+    const id_Usuario = 1;
+    var id_Amigo = "";
+    socket.emit("Select Amigos", id_Usuario);
+
+
+    $("form#chat").submit(function (event) {
+        event.preventDefault();
+        socket.emit("enviar mensagem", $(this).find("#text_mess").val(), id_Usuario, id_Amigo, function () {
+            $("form#chat #text_mess").val("");
+        });
+    });
+    socket.on("Buscar Amigos", (Pessoas) => {
+        Pessoas.forEach(Pessoas => {
+            const divElement = document.createElement('div');
+            divElement.classList.add('constPeople');
+
+            const src = "../IMG/" + Pessoas.foto;
+            const image = document.createElement('img');
+            image.src = src;
+            image.classList.add('constIMG');
+
+            const divElementText = document.createElement('div');
+
+            const ElementTextName = document.createElement('p');
+            const ElementTextBio = document.createElement('p');
+
+            const TextName = document.createTextNode(Pessoas.nome);
+            const TextBio = document.createTextNode(Pessoas.bio);
+
+            ElementTextName.classList.add('constName');
+            ElementTextBio.classList.add('constSTT');
+
+            divElement.appendChild(image);
+            ElementTextName.appendChild(TextName);
+            ElementTextBio.appendChild(TextBio);
+            divElementText.appendChild(ElementTextName);
+            divElementText.appendChild(ElementTextBio);
+            divElement.appendChild(divElementText);
+
+            divElement.addEventListener('click', (event) => {
+                const imageMess = document.createElement('img');
+                imageMess.src = src;
+                imageMess.classList.add('constIMG');
+
+                const nameMess = document.createElement('p');
+                nameMess.classList.add('messName');
+                const valeuName = document.createTextNode(Pessoas.nome)
+                nameMess.appendChild(valeuName);
+
+                const ElementInfo = document.querySelector('#messInfo');
+                var OldMess = ElementInfo.querySelector('#messInfo img');
+                if (OldMess) {
+                    var OldMess = ElementInfo.querySelector('#messInfo img').remove();
+                    var OldMess = ElementInfo.querySelector('#messInfo p').remove();
+                }
+                const InputMess = document.querySelector('#text_mess');
+
+                if (!InputMess) {
+                    const InputElement = document.createElement('input');
+                    InputElement.setAttribute('name', 'Mess');
+                    InputElement.setAttribute('id', 'text_mess');
+                    InputElement.setAttribute('type', 'text');
+                    InputElement.setAttribute('placeholder', 'Digite Aqui!');
+                    InputElement.setAttribute('class', 'messElement');
+
+                    const labelButtonElement = document.createElement('label');
+                    labelButtonElement.setAttribute('for', 'Enviar');
+
+                    const iElementEnviar = document.createElement('i');
+                    iElementEnviar.setAttribute('class', 'messEnviar fas fa-paper-plane');
+
+                    labelButtonElement.appendChild(iElementEnviar);
+
+                    const iElementAnexar = document.createElement('i');
+                    iElementAnexar.setAttribute('class', 'messEnviar fas fa-paperclip');
+
+                    const FormElement = document.querySelector('#chat');
+                    FormElement.appendChild(InputElement);
+                    FormElement.appendChild(labelButtonElement);
+                    FormElement.appendChild(iElementAnexar);
+
+
+                }
+
+                ElementInfo.appendChild(imageMess);
+                ElementInfo.appendChild(nameMess);
+
+                id_Amigo = Pessoas.id_Usuario;
+                socket.emit("SelectChat", id_Usuario, id_Amigo);
+                // setInterval(() => {
+                //     socket.emit("SelectChat", id_Usuario, id_Amigo);
+                //     $('.messChat').html("");
+                // }, 6000);
+
+                socket.on("BuscarChat", Chat => {
+                    const MessChat = document.querySelector('.TalkSend');
+                    if (MessChat) {
+                        const MessLast = document.querySelector()
+                        $('.messChat').html("");
+                    }
+                    Chat.forEach(Chat => {
+                        console.log(Chat);
+
+                        if (Chat.fk_id_Usuario == id_Usuario) {
+                            const DivElementMess = document.createElement('div');
+                            DivElementMess.setAttribute('class', 'TalkSend');
+
+                            const ImgElementMess = document.createElement('img');
+                            ImgElementMess.src = "../IMG/Nathan.jpeg";
+                            ImgElementMess.setAttribute('class', 'constIMGSend');
+
+                            DivElementMess.appendChild(ImgElementMess);
+
+                            const divText = document.createElement('div');
+                            divText.setAttribute('class', 'messTextSend');
+
+                            const TextNode = document.createTextNode(Chat.mensagem);
+
+                            divText.appendChild(TextNode);
+
+                            DivElementMess.appendChild(divText);
+
+                            const DivMessChat = document.querySelector('.messChat');
+                            DivMessChat.appendChild(DivElementMess);
+                        }
+                        else {
+                            const DivElementMess = document.createElement('div');
+                            DivElementMess.setAttribute('class', 'Talk');
+
+                            const ImgElementMess = document.createElement('img');
+                            ImgElementMess.src = "../IMG/" + Pessoas.foto;
+                            ImgElementMess.setAttribute('class', 'constIMG');
+
+                            DivElementMess.appendChild(ImgElementMess);
+
+                            const divText = document.createElement('div');
+                            divText.setAttribute('class', 'messText');
+
+                            const TextNode = document.createTextNode(Chat.mensagem);
+
+                            divText.appendChild(TextNode);
+
+                            DivElementMess.appendChild(divText);
+
+                            const DivMessChat = document.querySelector('.messChat');
+                            DivMessChat.appendChild(DivElementMess);
+                        }
+                    })
+                })
+
+            })
+
+            const DivPai = document.querySelector('#contato');
+
+            DivPai.appendChild(divElement);
+        });
+
+    });
+
+    socket.on("atualizar mensagens", (mensagem) => {
+
+        const divElement = document.createElement('div');
+        divElement.classList.add('TalkSend');
+
+        const divText = document.createElement('div');
+        divText.classList.add('messTextSend');
+        divText.append(mensagem);
+
+        const image = document.createElement('img');
+        image.src = "../IMG/Nathan.jpeg";
+        image.classList.add('constIMGSend');
+
+        divElement.appendChild(image);
+        divElement.appendChild(divText);
+
+        const divPai = document.querySelector('.messChat');
+
+        console.log(divPai);
+
+        divPai.appendChild(divElement);
+
+        // var mensagem_formatada = $("<p />").text(mensagem);
+        // const Eleement = document.querySelector('#teste');
+        // Eleement.text = mensagem;
+        // Eleement.append(mensagem);
+        // console.log(mensagem)
+    });
+</script>
+
+</html>

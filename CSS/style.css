@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0;
+    color: white;
+}
+
+.hero {
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    background-attachment: fixed;
+    background-color: rgb(145, 165, 250);
+}
+
+.container {
+    background-color: blueviolet;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 85%;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5rem;
+    border-radius: 20px;
+}
+
+.const {
+    height: 100%;
+    width: 25rem;
+    background-color: rgb(77, 0, 150);;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: inline-block;
+}
+.constList{
+    overflow: auto;
+    height: 88%;
+}
+
+.titleConst {
+    background-color: rgb(59, 43, 78);
+    border-top-left-radius: 20px;
+    text-align: center;
+    padding: 10px;
+}
+
+.constPeople {
+    display: flex;
+    margin-top: 1px;
+    background-color: rgb(33, 24, 54);
+    width: 100%;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.constIMG {
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.constName {
+    margin-top: 6px;
+    margin-left: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.constSTT {
+    display: block;
+    margin-top: -2px;
+    margin-left: 7px;
+}
+
+.constPeople:hover {
+    background-color: rgb(67, 50, 110);
+}
+
+.messConst {
+    background-color: rgb(67, 50, 110);
+    width: 1197px;
+    height: 63px;
+    border-top-right-radius: 20px;
+    position: absolute;
+    margin-left: 25rem;
+}
+
+.messName {
+    margin-top: 14px;
+    margin-left: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.messInfo {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5px;
+}
+
+.messInput {
+    /* margin-top: 250px; */
+    padding: 10px;
+    width: 100%;
+    position: static;
+    top: 250px;
+}
+.messElement {
+    width: 96%;
+    height: 35px;
+    border: 1px solid rgb(59, 43, 78);
+    font-size: 15px;
+    border-radius: 100px;
+    padding: 5px;
+    padding-left: 20px;
+    color: black;
+}
+
+input:focus {
+    box-shadow: 0 0 0 0;
+    outline: 0;
+}
+.messEnviar{
+    font-size: 20px;
+    margin-left: -105px;
+    color: black;
+    cursor: pointer;
+    padding-left: 50px;
+}
+.Talk{
+    margin-top: 10px;
+    display: flex;
+    float: left;
+    max-width: 50%;
+    margin-left: 10px;
+    width: 100%;
+}
+.messText{
+    background-color: rgb(255, 255, 255);
+    color: black;
+    border-radius: 10px;
+    margin-top: 8px;
+    padding: 10px;
+    padding-left: 12px;
+}
+.messTextSend{
+    background-color: rgb(59, 43, 78);
+    border-radius: 10px;
+    margin-top: 8px;
+    padding: 10px;
+    padding-right: 12px;
+}
+.TalkSend{
+    text-align: left;
+    max-width: 50%;
+    width: 100%;
+    direction: rtl;
+    float: right;
+    margin-top: 10px;
+    display: flex;
+    margin-right: 20px;
+}
+.constIMGSend {
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+}
+.submit{
+    background-color: none;
+    margin-right: 10px;
+}
+.messChat{
+    display: block;
+    height: 670px;
+    max-height: 670px;
+    overflow: auto;
+    margin-right: 5px;
+    /* position: absolute; */
+}
+::-webkit-scrollbar{
+    width: 8px;
+    padding-right: 100px;
+}
+::-webkit-scrollbar-track{
+    background-color: #fff;
+    border-radius: 10px;
+    
+}
+::-webkit-scrollbar-button{
+    display: none;
+}
+::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background-color: rgb(95, 95, 95);
+    border-radius: 10px;
+}
